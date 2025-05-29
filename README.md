@@ -1,4 +1,1 @@
-# Next.jsにパスキーを導入してみる
-
-これをNext.jsのserver actionsで動かしてみる
-https://simplewebauthn.dev/docs/packages/server
+# HonoでOAuth 2.0の認可フローを実装してみる
