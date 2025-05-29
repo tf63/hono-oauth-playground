@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "incremental": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "hono/jsx",
+        "types": ["vite/client"]
+    },
+    "include": ["apps/**/*.ts", "apps/**/*.tsx"],
+    "exclude": ["node_modules", "out", "dist", "build", ".next", "bower_components", "jspm_packages"]
+}
