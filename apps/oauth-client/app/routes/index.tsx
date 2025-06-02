@@ -1,4 +1,8 @@
+import { setCookie } from 'hono/cookie'
 import { createRoute } from 'honox/factory'
+import { nanoid } from 'nanoid'
+
+import { sessionStore } from '../lib/db'
 
 export default createRoute((c) => {
     return c.render(
@@ -20,5 +24,26 @@ export default createRoute((c) => {
 })
 
 export const POST = createRoute((c) => {
-    return c.redirect('http://localhost:3001')
+    // ランダムな state 値を生成
+    const state = nanoid()
+
+    // セッションストアに state を保存
+    const sessionId = nanoid() // セッションIDを生成
+    sessionStore.set(sessionId, state)
+
+    setCookie(c, 'session_id', sessionId, {
+        httpOnly: true,
+    })
+
+    const params = new URLSearchParams({
+        client_id: 'your-client-id', // クライアントID
+        redirect_uri: 'http://localhost:3000/callback', // リダイレクト先
+        response_type: 'code', // レスポンスタイプ
+        scope: 'hoge', // スコープ
+        state, // CSRF 対策用のstateパラメータ
+    })
+
+    const authorizationUrl = `http://localhost:3001/login?${params.toString()}`
+
+    return c.redirect(authorizationUrl)
 })
