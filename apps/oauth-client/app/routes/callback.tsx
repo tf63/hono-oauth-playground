@@ -2,7 +2,7 @@ import { getCookie } from 'hono/cookie'
 import type { JSX } from 'hono/jsx'
 import { createRoute } from 'honox/factory'
 
-import { sessionStore } from '../lib/db'
+import { accessTokenStore, sessionStore } from '../lib/db'
 
 export const GET = createRoute(async (c) => {
     // ----------------------------------------------------------------
@@ -57,6 +57,11 @@ export const GET = createRoute(async (c) => {
     }
 
     const tokenData = await tokenResponse.json()
+    if (!tokenData.access_token) {
+        return c.text('Access token not found in response', 500)
+    }
+
+    accessTokenStore.set(sessionId, tokenData.access_token)
 
     return c.render(
         <CallbackCard>
@@ -88,10 +93,10 @@ function CallbackCard({ children }: { children: JSX.HTMLAttributes }) {
                 <h1 className="mb-6 text-center text-2xl font-bold">Authorization Successful</h1>
                 {children}
                 <a
-                    href="/"
+                    href="/resource"
                     className="block w-full rounded-lg bg-indigo-400 py-2 text-center text-white transition hover:bg-indigo-500"
                 >
-                    Back to Home
+                    {'Go to Protected Resource'}
                 </a>
             </div>
         </div>

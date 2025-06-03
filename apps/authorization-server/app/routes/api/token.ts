@@ -1,7 +1,7 @@
 import { createRoute } from 'honox/factory'
 import { nanoid } from 'nanoid'
 
-import { accessTokenStore, authorizationStore } from '../../lib/db'
+import { accessTokenInfoStore, authorizationStore } from '../../lib/db'
 
 export const POST = createRoute(async (c) => {
     const body = await c.req.parseBody<{
@@ -47,12 +47,10 @@ export const POST = createRoute(async (c) => {
     // アクセストークンの生成と保存
     // ----------------------------------------------------------------
     const accessToken = nanoid()
-    accessTokenStore.set(accessToken, { clientId: client_id, scope: storedCode.scope })
+    accessTokenInfoStore.set(accessToken, { clientId: client_id, scope: storedCode.scope })
 
     // アクセストークンを返却
     return c.json({
         access_token: accessToken,
-        token_type: 'Bearer',
-        expires_in: 3600, // 有効期限（秒）
     })
 })
