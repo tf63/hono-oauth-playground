@@ -104,13 +104,13 @@ function AuthorizeCard({ c, children }: { c: Context; children: JSX.HTMLAttribut
     const params = getParams(c)
 
     return (
-        <div className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+        <div className="flex min-h-screen items-center justify-center gap-16 bg-gray-900 text-white">
+            <div className="w-full max-w-md rounded-2xl bg-gray-800 p-8 shadow-lg">
                 <h1 className="mb-6 text-center text-2xl font-bold">Authorize Access</h1>
-                <p className="mb-4 text-center text-sm text-slate-500">
+                <p className="mb-4 text-center text-sm text-gray-400">
                     The application <strong>{params.clientId}</strong> is requesting access to your resources.
                 </p>
-                <p className="mb-6 text-center text-sm text-slate-500">
+                <p className="mb-6 text-center text-sm text-gray-400">
                     Requested permissions: <strong>{params.scope}</strong>
                 </p>
                 {children}

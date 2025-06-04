@@ -103,11 +103,11 @@ export const POST = createRoute(async (c) => {
 function LoginCard({ c, children }: { c: Context; children: JSX.HTMLAttributes }) {
     const error = c.req.query('error')
     return (
-        <div className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-lg">
+        <div className="flex min-h-screen items-center justify-center bg-gray-900 text-white">
+            <div className="w-full max-w-sm rounded-2xl bg-gray-800 p-8 shadow-lg">
                 <h1 className="mb-6 text-center text-2xl font-bold">Login</h1>
-                {error && <p className="mb-4 text-center text-sm text-red-500">{error}</p>}
-                <p className="mb-6 text-center text-sm text-slate-500">Please enter your credentials to log in</p>
+                {error && <p className="mb-4 text-center text-sm text-red-400">{error}</p>}
+                <p className="mb-6 text-center text-sm text-gray-400">Please enter your credentials to log in</p>
                 {children}
             </div>
         </div>
@@ -117,7 +117,7 @@ function LoginCard({ c, children }: { c: Context; children: JSX.HTMLAttributes }
 function UserNameInput() {
     return (
         <div className="mb-4">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="username" className="block text-sm font-medium text-gray-300">
                 Username
             </label>
             <input
@@ -128,7 +128,7 @@ function UserNameInput() {
                 required={true}
                 placeholder="user"
                 autoComplete="username"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
         </div>
     )
@@ -137,7 +137,7 @@ function UserNameInput() {
 function PasswordInput() {
     return (
         <div className="mb-6">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-300">
                 Password
             </label>
             <input
@@ -148,7 +148,7 @@ function PasswordInput() {
                 required={true}
                 placeholder="password"
                 autoComplete="current-password"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
         </div>
     )
