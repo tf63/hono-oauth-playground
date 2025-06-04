@@ -5,7 +5,9 @@ import { nanoid } from 'nanoid'
 
 import { sessionStore } from '../lib/db'
 
+const CLIENT_SERVER = 'http://localhost:3000' // クライアントサーバー
 const AUTHORIZATION_SERVER = 'http://localhost:3001' // 認可サーバー
+const AUTHORIZATION_SCOPE = 'hoge foo' // 認可サーバーのスコープ
 
 export const GET = createRoute((c) => {
     // ----------------------------------------------------------------
@@ -17,6 +19,7 @@ export const GET = createRoute((c) => {
         sameSite: 'Strict',
         secure: true,
     })
+    // sameSiteをつけてもlocalhost:3000 -> localhost:3001ではcookieが送信されるので注意
     return c.render(
         <ClientCard>
             <form method="post">
@@ -39,16 +42,6 @@ export const POST = createRoute((c) => {
     if (!sessionId) {
         return c.text('Session ID not found', 400)
     }
-    setCookie(c, 'session_id', sessionId, {
-        httpOnly: true,
-        sameSite: 'Strict',
-        secure: true,
-    })
-    // sameSiteをつけてもlocalhost:3000 -> localhost:3001ではcookieが送信されるので注意
-
-    if (!sessionId) {
-        return c.text('Session ID not found', 400)
-    }
 
     const state = nanoid() // CSRF対策用のstateパラメータ
     sessionStore.set(sessionId, state)
@@ -58,9 +51,9 @@ export const POST = createRoute((c) => {
     // ----------------------------------------------------------------
     const params = new URLSearchParams({
         client_id: 'your-client-id', // クライアントID
-        redirect_uri: 'http://localhost:3000/callback', // リダイレクト先
+        redirect_uri: `${CLIENT_SERVER}/callback`, // リダイレクト先
         response_type: 'code', // レスポンスタイプ
-        scope: 'hoge foo', // スコープ
+        scope: AUTHORIZATION_SCOPE, // スコープ
         state,
     })
 

@@ -3,6 +3,9 @@ import { nanoid } from 'nanoid'
 
 import { accessTokenInfoStore, authorizationStore } from '../../lib/db'
 
+const CLINET_ID = 'your-client-id' // クライアントID
+const CLIENT_SECRET = 'your-client-secret' // クライアントシークレット
+
 export const POST = createRoute(async (c) => {
     const body = await c.req.parseBody<{
         grant_type: string
@@ -17,7 +20,7 @@ export const POST = createRoute(async (c) => {
     // ----------------------------------------------------------------
     // クライアントIDとクライアントシークレットの検証
     // ----------------------------------------------------------------
-    if (client_id !== 'your-client-id' || client_secret !== 'your-client-secret') {
+    if (client_id !== CLINET_ID || client_secret !== CLIENT_SECRET) {
         return c.text('Invalid client credentials', 401)
     }
 
@@ -30,24 +33,29 @@ export const POST = createRoute(async (c) => {
     }
 
     // 認可コードから認可情報を取得
-    const storedCode = authorizationStore.get(code)
-    if (!storedCode) {
-        return c.text('Invalid or expired authorization code', 400)
+    const authorizationInfo = authorizationStore.get(code)
+    if (!authorizationInfo) {
+        return c.text('Invalid authorization code', 400)
+    }
+
+    // 認可コードの有効期限の検証
+    if (Date.now() > Number(authorizationInfo.expiredAt)) {
+        return c.text('Authorization code expired', 400)
     }
 
     // クライアントIDとリダイレクトURIの検証
-    if (client_id !== storedCode.clientId || redirect_uri !== storedCode.redirectUri) {
+    if (client_id !== authorizationInfo.clientId || redirect_uri !== authorizationInfo.redirectUri) {
         return c.text('Invalid request', 400)
     }
 
-    // 認可コードを削除（再利用を防ぐ）
+    // 認可コードを削除 （再利用を防ぐ）
     authorizationStore.delete(code)
 
     // ----------------------------------------------------------------
     // アクセストークンの生成と保存
     // ----------------------------------------------------------------
     const accessToken = nanoid()
-    accessTokenInfoStore.set(accessToken, { clientId: client_id, scope: storedCode.scope })
+    accessTokenInfoStore.set(accessToken, { clientId: client_id, scope: authorizationInfo.scope })
 
     // アクセストークンを返却
     return c.json({

@@ -4,6 +4,12 @@ import { createRoute } from 'honox/factory'
 
 import { accessTokenStore, sessionStore } from '../lib/db'
 
+const CLIENT_SERVER = 'http://localhost:3000' // クライアントサーバー
+const AUTHORIZATION_SERVER = 'http://localhost:3001' // 認可サーバー
+
+const CLINET_ID = 'your-client-id' // クライアントID
+const CLIENT_SECRET = 'your-client-secret' // クライアントシークレット
+
 export const GET = createRoute(async (c) => {
     // ----------------------------------------------------------------
     // クエリパラメータから code と state を取得
@@ -33,12 +39,7 @@ export const GET = createRoute(async (c) => {
     // ----------------------------------------------------------------
     // 認可コードをアクセストークンに交換
     // ----------------------------------------------------------------
-    const tokenEndpoint = 'http://localhost:3001/api/token' // トークンエンドポイントのURL
-    const clientId = 'your-client-id'
-    const clientSecret = 'your-client-secret' // クライアントシークレット（安全に管理する必要があります）
-    const redirectUri = 'http://localhost:3000/callback'
-
-    const tokenResponse = await fetch(tokenEndpoint, {
+    const tokenResponse = await fetch(`${AUTHORIZATION_SERVER}/api/token`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,9 +47,9 @@ export const GET = createRoute(async (c) => {
         body: new URLSearchParams({
             grant_type: 'authorization_code',
             code,
-            redirect_uri: redirectUri,
-            client_id: clientId,
-            client_secret: clientSecret,
+            redirect_uri: `${CLIENT_SERVER}/callback`,
+            client_id: CLINET_ID,
+            client_secret: CLIENT_SECRET,
         }).toString(),
     })
 

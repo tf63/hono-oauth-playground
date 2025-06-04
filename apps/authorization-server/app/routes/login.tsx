@@ -7,6 +7,9 @@ import { nanoid } from 'nanoid'
 import { sessionStore } from '../lib/db'
 import { type AuthorizeParamsType, getParams } from './authorize'
 
+const USER_NAME = 'user'
+const USER_PASSWORD = 'password'
+
 export const GET = createRoute((c) => {
     const params = getParams(c)
     return c.render(
@@ -44,7 +47,7 @@ export const POST = createRoute(async (c) => {
     // ----------------------------------------------------------------
     // ユーザー名とパスワードの検証
     // ----------------------------------------------------------------
-    if (username !== 'user' || password !== 'password') {
+    if (username !== USER_NAME || password !== USER_PASSWORD) {
         // 認証失敗
         // エラーメッセージをクエリパラメータに追加して再読み込み
         const errorParams = new URLSearchParams({
@@ -121,6 +124,7 @@ function UserNameInput() {
                 type="text"
                 id="username"
                 name="username"
+                value={USER_NAME}
                 required={true}
                 placeholder="user"
                 autoComplete="username"
@@ -140,6 +144,7 @@ function PasswordInput() {
                 type="password"
                 id="password"
                 name="password"
+                value={USER_PASSWORD}
                 required={true}
                 placeholder="password"
                 autoComplete="current-password"

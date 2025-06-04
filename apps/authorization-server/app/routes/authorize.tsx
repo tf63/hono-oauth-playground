@@ -41,7 +41,7 @@ export const POST = createRoute(async (c) => {
     // ----------------------------------------------------------------
     // 認可情報の作成。 認可サーバーで保持しておき、後でアクセストークンを検証するために使用する
     // ----------------------------------------------------------------
-    const expiredAt = Date.now() + 60 * 60 * 1000 // 1時間後に有効期限を設定
+    const expiredAt = Date.now() + 60 * 60 * 1000 // 認可コードの有効期限
     const authorizationInfo = {
         clientId,
         redirectUri,
