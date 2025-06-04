@@ -16,6 +16,6 @@
         "jsxImportSource": "hono/jsx",
         "types": ["vite/client"]
     },
-    "include": ["apps/**/*.ts", "apps/**/*.tsx"],
+    "include": ["**/*.ts", "**/*.tsx"],
     "exclude": ["node_modules", "out", "dist", "build", ".next", "bower_components", "jspm_packages"]
 }
