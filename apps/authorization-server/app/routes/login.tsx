@@ -26,7 +26,7 @@ export const GET = createRoute((c) => {
 
                 <button
                     type="submit"
-                    className="w-full rounded-lg bg-indigo-400 py-2 text-white transition hover:bg-indigo-500"
+                    className="w-full rounded-lg bg-indigo-500 py-2 text-white transition hover:bg-indigo-400"
                 >
                     Log In
                 </button>

@@ -18,7 +18,7 @@ export const GET = createRoute((c) => {
                 <input type="hidden" name="state" value={params.state} />
                 <button
                     type="submit"
-                    className="w-full rounded-lg bg-green-500 px-4 py-2 text-white transition hover:bg-green-600"
+                    className="w-full rounded-lg bg-green-500 px-4 py-2 text-white transition hover:bg-green-400"
                 >
                     Approve
                 </button>
