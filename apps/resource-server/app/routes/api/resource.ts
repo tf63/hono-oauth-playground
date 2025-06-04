@@ -1,10 +1,8 @@
-import { Hono } from 'hono'
-
-const app = new Hono()
+import { createRoute } from 'honox/factory'
 
 const AUTHORIZATION_SERVER = 'http://localhost:3001' // 認可サーバーのURL
 
-app.get('/resource', async (c) => {
+export const GET = createRoute(async (c) => {
     // ----------------------------------------------------------------
     // Authorizationヘッダーからアクセストークンを取得
     // ----------------------------------------------------------------
@@ -44,5 +42,3 @@ app.get('/resource', async (c) => {
         scope: introspectionResult.scope, // トークンに紐付けられたスコープ
     })
 })
-
-export default app

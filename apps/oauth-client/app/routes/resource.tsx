@@ -22,7 +22,7 @@ export const GET = createRoute(async (c) => {
     // ----------------------------------------------------------------
     // リソースサーバーからデータを取得
     // ----------------------------------------------------------------
-    const resourceResponse = await fetch(`${RESOURCE_SERVER}/resource`, {
+    const resourceResponse = await fetch(`${RESOURCE_SERVER}/api/resource`, {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${accessToken}`,
