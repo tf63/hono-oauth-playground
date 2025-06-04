@@ -66,9 +66,9 @@ export const GET = createRoute(async (c) => {
 
     return c.render(
         <CallbackCard>
-            <p className="mb-6 text-center text-sm text-slate-500">Authorization Code:</p>
+            <p className="mb-2 text-center text-sm text-slate-500">Authorization Code:</p>
             <p className="mb-6 text-center font-mono text-lg text-green-600">{code}</p>
-            <p className="mb-6 text-center text-sm text-slate-500">Access Token: (this is a secret)</p>
+            <p className="mb-2 text-center text-sm text-slate-500">Access Token: (this is a secret)</p>
             <p className="mb-6 text-center font-mono text-lg text-green-600">{tokenData.access_token}</p>
         </CallbackCard>
     )
@@ -90,7 +90,7 @@ export const GET = createRoute(async (c) => {
 function CallbackCard({ children }: { children: JSX.HTMLAttributes }) {
     return (
         <div className="flex min-h-screen items-center justify-center">
-            <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-lg">
+            <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
                 <h1 className="mb-6 text-center text-2xl font-bold">Authorization Successful</h1>
                 {children}
                 <a

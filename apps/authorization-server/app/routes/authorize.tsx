@@ -108,7 +108,7 @@ function AuthorizeCard({ c, children }: { c: Context; children: JSX.HTMLAttribut
             <div className="w-full max-w-md rounded-2xl bg-gray-800 p-8 shadow-lg">
                 <h1 className="mb-6 text-center text-2xl font-bold">Authorize Access</h1>
                 <p className="mb-4 text-center text-sm text-gray-400">
-                    The application <strong>{params.clientId}</strong> is requesting access to your resources.
+                    <strong>{params.clientId}</strong> がリソースへのアクセスを求めています
                 </p>
                 <p className="mb-6 text-center text-sm text-gray-400">
                     Requested permissions: <strong>{params.scope}</strong>
